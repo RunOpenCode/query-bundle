@@ -28,7 +28,12 @@ final readonly class ConfigureTwigLoader implements CompilerPassInterface
 
         \assert(\is_string($projectDir));
 
-        $loader->addMethodCall('addPath', [$defaultPath, FilesystemLoader::MAIN_NAMESPACE]);
+        /** @var non-empty-string $defaultPath */
+        if (\is_dir($defaultPath)) {
+            $loader->addMethodCall('addPath', [$defaultPath, FilesystemLoader::MAIN_NAMESPACE]);
+        }
+
+        $container->addResource(new FileExistenceResource($defaultPath));
 
         /** @var array<string, string|null> $paths */
         foreach ($paths as $path => $namespace) {

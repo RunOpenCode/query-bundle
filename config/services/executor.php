@@ -17,7 +17,7 @@ return static function(ContainerConfigurator $container): void {
 
     $configurator
         ->set(AdapterRegistry::class)
-        ->arg('$executors', tagged_iterator('runopencode.query.adapter'));
+        ->arg('$adapters', tagged_iterator('runopencode.query.adapter'));
 
     $configurator
         ->set(MiddlewareRegistry::class);
@@ -31,8 +31,8 @@ return static function(ContainerConfigurator $container): void {
 
     $configurator
         ->set(Executor::class)
-        ->arg('$middlewares', MiddlewareRegistry::class)
-        ->arg('$adapters', AdapterRegistry::class);
+        ->arg('$middlewares', service(MiddlewareRegistry::class))
+        ->arg('$adapters', service(AdapterRegistry::class));
 
     $configurator
         ->alias(ExecutorInterface::class, Executor::class);

@@ -15,13 +15,12 @@ return static function(DefinitionConfigurator $definition): void {
             ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('stack')
-                ->addDefaultsIfNotSet()
                 ->defaultValue([
                     'cache',
                     'parser',
                     'executor',
                 ])
-                    ->scalarPrototype()
+                    ->scalarPrototype()->end()
                 ->end()
                 ->arrayNode('replica')
                     ->useAttributeAsKey('connection')

@@ -55,13 +55,15 @@ final readonly class ConfigureMiddlewareStack implements CompilerPassInterface
         $tagged = $container->findTaggedServiceIds('runopencode.query.middleware');
 
         /**
-         * @var array{ alias?: non-empty-string } $attributes
-         * @var non-empty-string                  $id
+         * @var list<array{ alias?: non-empty-string }> $attributes
+         * @var non-empty-string                        $id
          */
         foreach ($tagged as $id => $attributes) {
-            if (isset($attributes['alias'])) {
-                yield $attributes['alias'] => new Reference($id);
-                continue;
+            foreach ($attributes as $attribute) {
+                if (isset($attribute['alias'])) {
+                    yield $attribute['alias'] => new Reference($id);
+                    continue 2;
+                }
             }
 
             yield $id => new Reference($id);

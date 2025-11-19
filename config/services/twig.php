@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Psr\Container\ContainerInterface;
 use RunOpenCode\Bundle\QueryBundle\CacheWarmer\TwigCacheWarmer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Twig\Environment;
@@ -30,6 +29,6 @@ return static function(ContainerConfigurator $container): void {
 
     $configurator
         ->set(TwigCacheWarmer::class)
-        ->arg('$container', service(ContainerInterface::class))
+        ->arg('$container', service('service_container'))
         ->tag('kernel.cache_warmer');
 };

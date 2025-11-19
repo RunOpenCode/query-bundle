@@ -11,9 +11,9 @@ return static function(DefinitionConfigurator $definition): void {
         ->addDefaultsIfNotSet()
         ->children()
             ->scalarNode('cache_pool')
-                ->defaultValue('app.cache')
+                ->defaultValue('cache.app')
                 ->info(<<<INFO
-Cache pool to use for cache middleware. By default `app.cache` is used. If `NULL` is provided, middleware will be still
+Cache pool to use for cache middleware. By default `cache.app` is used. If `NULL` is provided, middleware will be still
 registered, but `Symfony\Component\Cache\Adapter\NullAdapter` will be used (no caching). 
 INFO)
             ->end()

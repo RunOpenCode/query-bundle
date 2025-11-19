@@ -21,22 +21,22 @@ final readonly class RegisterDbalAdapters implements CompilerPassInterface
             return;
         }
 
-        /** @var list<non-empty-string> $connections */
+        /** @var array<non-empty-string, non-empty-string> $connections */
         $connections = $container->getParameter('doctrine.connections');
-        $default     = $container->getParameter('doctrine.default_connection');
-        $sorted      = [
-            $default,
-            \array_filter($connections, static fn(string $connection): bool => $connection !== $default),
-        ];
 
         /** @var non-empty-string $connection */
-        foreach ($sorted as $connection) {
+        foreach ($connections as $alias => $connection) {
             $definition = new Definition(Adapter::class, [
-                $connection,
+                $alias,
                 new Reference($connection),
             ]);
 
             $definition->addTag('runopencode.query.adapter');
+            
+            $container->setDefinition(
+                \sprintf('runopencode.query.adapter.%s', $alias),
+                $definition,
+            );
         }
     }
 }

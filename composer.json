@@ -16,8 +16,7 @@
         "symfony/dependency-injection": "^7.0",
         "symfony/finder": "^7.0",
         "symfony/http-kernel": "^7.0",
-        "twig/twig": "^3.0",
-        "psr/container": "^2.0"
+        "twig/twig": "^3.0"
     },
     "autoload": {
         "psr-4": {
