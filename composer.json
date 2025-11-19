@@ -1,0 +1,52 @@
+{
+    "name": "runopencode/query-bundle",
+    "description": "Symfony integration with runopencode/query component.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nikola Svitlica a.k.a TheCelavi",
+            "email": "thecelavi@runopencode.com"
+        }
+    ],
+    "require": {
+        "runopencode/query": "^0.2",
+        "php": ">=8.4",
+        "psr/cache": "^3.0",
+        "symfony/config": "^7.0",
+        "symfony/dependency-injection": "^7.0",
+        "symfony/finder": "^7.0",
+        "symfony/http-kernel": "^7.0",
+        "twig/twig": "^3.0",
+        "psr/container": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RunOpenCode\\Bundle\\QueryBundle\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../Component/Dataset",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../Component/Query",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../Component/Metadata",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+    "version": "0.2",
+    "minimum-stability": "dev"
+}
