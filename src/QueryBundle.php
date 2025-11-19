@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace RunOpenCode\Component\QueryBundle;
+namespace RunOpenCode\Bundle\QueryBundle;
 
 use RunOpenCode\Component\Query\Contract\Middleware\MiddlewareInterface;
-use RunOpenCode\Component\QueryBundle\DependencyInjection\CompilerPass;
+use RunOpenCode\Bundle\QueryBundle\DependencyInjection\CompilerPass;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;

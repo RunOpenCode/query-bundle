@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace RunOpenCode\Component\QueryBundle\DependencyInjection\CompilerPass;
+namespace RunOpenCode\Bundle\QueryBundle\DependencyInjection\CompilerPass;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * @phpstan-import-type TwigGlobals from \RunOpenCode\Component\QueryBundle\QueryBundle
+ * @phpstan-import-type TwigGlobals from \RunOpenCode\Bundle\QueryBundle\QueryBundle
  */
 final readonly class RegisterTwigGlobals implements CompilerPassInterface
 {

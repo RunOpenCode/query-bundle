@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
-use RunOpenCode\Component\QueryBundle\CacheWarmer\TwigCacheWarmer;
+use RunOpenCode\Bundle\QueryBundle\CacheWarmer\TwigCacheWarmer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Twig\Environment;
 use Twig\Loader\ChainLoader;

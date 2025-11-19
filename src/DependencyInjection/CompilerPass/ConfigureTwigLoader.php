@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RunOpenCode\Component\QueryBundle\DependencyInjection\CompilerPass;
+namespace RunOpenCode\Bundle\QueryBundle\DependencyInjection\CompilerPass;
 
 use Symfony\Component\Config\Resource\FileExistenceResource;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RunOpenCode\Component\QueryBundle\CacheWarmer;
+namespace RunOpenCode\Bundle\QueryBundle\CacheWarmer;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;

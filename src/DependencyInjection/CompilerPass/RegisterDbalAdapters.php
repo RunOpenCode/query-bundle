@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RunOpenCode\Component\QueryBundle\DependencyInjection\CompilerPass;
+namespace RunOpenCode\Bundle\QueryBundle\DependencyInjection\CompilerPass;
 
 use RunOpenCode\Component\Query\Doctrine\Dbal\Adapter;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
