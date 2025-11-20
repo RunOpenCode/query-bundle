@@ -14,7 +14,7 @@ final readonly class ConfigureTwigEnvironment implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasParameter('runopencode.query.twig')) {
+        if (!$container->hasDefinition('runopencode.query.twig')) {
             return;
         }
 

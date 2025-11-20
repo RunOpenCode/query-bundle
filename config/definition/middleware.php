@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use RunOpenCode\Component\Query\Doctrine\Replica\FallbackStrategy;
+use RunOpenCode\Component\Query\Replica\FallbackStrategy;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 
 return static function(DefinitionConfigurator $definition): void {
@@ -23,10 +23,9 @@ return static function(DefinitionConfigurator $definition): void {
                     ->scalarPrototype()->end()
                 ->end()
                 ->arrayNode('replica')
-                    ->useAttributeAsKey('connection')
                     ->arrayPrototype()
                         ->children()
-                            ->arrayNode('replicas')
+                            ->arrayNode('replica')
                                 ->beforeNormalization()
                                     ->ifString()
                                     ->then(static fn(string $value): array => (array) $value)

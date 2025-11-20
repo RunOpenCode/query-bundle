@@ -37,7 +37,6 @@ final readonly class TwigCacheWarmer implements CacheWarmerInterface
         /** @var Environment $twig */
         $twig = $this->container->get('runopencode.query.twig');
 
-        // TODO -> cache replacement is a must!
         if ($twig->getCache() instanceof NullCache) {
             return [];
         }
