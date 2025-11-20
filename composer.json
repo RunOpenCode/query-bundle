@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "runopencode/query": "^0.1.24",
+        "runopencode/query": "^0.2",
         "php": ">=8.4",
         "psr/cache": "^3.0",
         "symfony/config": "^7.0",
@@ -23,6 +23,36 @@
             "RunOpenCode\\Bundle\\QueryBundle\\": "src/"
         }
     },
-    "version": "0.1.24",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../Component/Dataset",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../Component/Query",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../Component/Metadata",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../Bundle/MetadataBundle",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+    "version": "0.2",
     "minimum-stability": "dev"
 }
