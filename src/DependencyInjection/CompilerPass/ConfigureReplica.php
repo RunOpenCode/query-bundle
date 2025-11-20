@@ -14,6 +14,6 @@ final readonly class ConfigureReplica implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        
+
     }
 }

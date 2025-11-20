@@ -32,7 +32,7 @@ final readonly class RegisterDbalAdapters implements CompilerPassInterface
             ]);
 
             $definition->addTag('runopencode.query.adapter');
-            
+
             $container->setDefinition(
                 \sprintf('runopencode.query.adapter.%s', $alias),
                 $definition,
