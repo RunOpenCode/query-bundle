@@ -85,7 +85,9 @@ final readonly class TwigCacheWarmer implements CacheWarmerInterface
         }
 
         if ($loader instanceof ChainLoader) {
-            yield from $this->getLoaders($loader);
+            foreach ($loader->getLoaders() as $current) {
+                yield from $this->getLoaders($current);
+            }
         }
     }
 

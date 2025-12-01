@@ -6,6 +6,7 @@ namespace RunOpenCode\Bundle\QueryBundle;
 
 use RunOpenCode\Component\Query\Contract\Middleware\MiddlewareInterface;
 use RunOpenCode\Bundle\QueryBundle\DependencyInjection\CompilerPass;
+use RunOpenCode\Component\Query\Replica\FallbackStrategy;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -35,11 +36,18 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
  *     globals?: TwigGlobals,
  * }
  *
+ * @phpstan-type ReplicaConfig = array{
+ *     replica: non-empty-list<non-empty-string>,
+ *     fallback: FallbackStrategy,
+ *     disabled: boolean,
+ * }
+ *
  * @phpstan-type Config = array{
  *     cache_pool: non-empty-string|null,
  *     twig: TwigConfig,
  *     middlewares: array{
  *         stack: non-empty-list<non-empty-string|class-string<MiddlewareInterface>>,
+ *         replica?: array<non-empty-string, ReplicaConfig>,
  *     }
  * }
  */
@@ -80,7 +88,8 @@ final class QueryBundle extends AbstractBundle
             ->set('.runopencode.query.configuration.twig.file_name_pattern', $config['twig']['file_name_pattern'])
             ->set('.runopencode.query.configuration.twig.globals', $config['twig']['globals'] ?? [])
             ->set('.runopencode.query.configuration.cache_pool', $config['cache_pool'])
-            ->set('.runopencode.query.configuration.middlewares.stack', $config['middlewares']['stack']);
+            ->set('.runopencode.query.configuration.middlewares.replica', $config['middlewares']['stack'])
+            ->set('.runopencode.query.configuration.middlewares.stack', $config['middlewares']['replica'] ?? []);
     }
 
     /**
@@ -96,6 +105,7 @@ final class QueryBundle extends AbstractBundle
         $container->addCompilerPass(new CompilerPass\ConfigureTwigCacheWarmer());
         $container->addCompilerPass(new CompilerPass\RegisterTwigGlobals());
         $container->addCompilerPass(new CompilerPass\ConfigureCacheMiddleware());
+        $container->addCompilerPass(new CompilerPass\ConfigureReplicaMiddleware());
         $container->addCompilerPass(new CompilerPass\ConfigureMiddlewareStack());
     }
 }

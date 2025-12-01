@@ -6,7 +6,7 @@ use RunOpenCode\Component\Query\Contract\ExecutorInterface;
 use RunOpenCode\Component\Query\Executor;
 use RunOpenCode\Component\Query\Executor\AdapterRegistry;
 use RunOpenCode\Component\Query\Executor\ExecutorMiddleware;
-use RunOpenCode\Component\Query\Middleware\MiddlewareRegistry;
+use RunOpenCode\Component\Query\Middleware\MiddlewareChain;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -20,7 +20,7 @@ return static function(ContainerConfigurator $container): void {
         ->arg('$adapters', tagged_iterator('runopencode.query.adapter'));
 
     $configurator
-        ->set(MiddlewareRegistry::class);
+        ->set(MiddlewareChain::class);
 
     $configurator
         ->set(ExecutorMiddleware::class)
@@ -31,7 +31,7 @@ return static function(ContainerConfigurator $container): void {
 
     $configurator
         ->set(Executor::class)
-        ->arg('$middlewares', service(MiddlewareRegistry::class))
+        ->arg('$middlewares', service(MiddlewareChain::class))
         ->arg('$adapters', service(AdapterRegistry::class));
 
     $configurator

@@ -43,6 +43,28 @@ return static function(DefinitionConfigurator $definition): void {
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('retry')
+                    ->scalarPrototype()->end()
+                    ->defaultValue(null)
+                    ->validate()
+                        ->ifFalse(static function(?array $value): bool {
+                            if (null === $value) {
+                                return true;
+                            }
+
+                            foreach ($value as $current) {
+                                if (\is_string($current) && \is_a($current, \Exception::class, true)) {
+                                    continue;
+                                }
+
+                                return false;
+                            }
+
+                            return true;
+                        })
+                        ->thenInvalid('Retry middleware expects a list of full qualified class names which extends "\Exception".')
+                    ->end()
+                ->end()
             ->end()
         ->end();
 };

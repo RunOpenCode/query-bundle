@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace RunOpenCode\Bundle\QueryBundle\DependencyInjection\CompilerPass;
 
 use RunOpenCode\Component\Query\Contract\Middleware\MiddlewareInterface;
-use RunOpenCode\Component\Query\Middleware\MiddlewareRegistry;
+use RunOpenCode\Component\Query\Middleware\MiddlewareChain;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
@@ -18,7 +18,7 @@ final readonly class ConfigureMiddlewareStack implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->hasDefinition(MiddlewareRegistry::class)) {
+        if (!$container->hasDefinition(MiddlewareChain::class)) {
             return;
         }
 
@@ -41,7 +41,7 @@ final readonly class ConfigureMiddlewareStack implements CompilerPassInterface
         }, $stack);
 
         $container
-            ->getDefinition(MiddlewareRegistry::class)
+            ->getDefinition(MiddlewareChain::class)
             ->setArgument('$middlewares', $resolved);
     }
 
