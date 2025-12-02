@@ -2,10 +2,27 @@
 
 declare(strict_types=1);
 
+use Psr\Log\LogLevel;
 use RunOpenCode\Component\Query\Replica\FallbackStrategy;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 
 return static function(DefinitionConfigurator $definition): void {
+    $assertCatchable = static function (?array $value): bool {
+        if (null === $value) {
+            return true;
+        }
+
+        foreach ($value as $current) {
+            if (\is_string($current) && \is_a($current, \Exception::class, true)) {
+                continue;
+            }
+
+            return false;
+        }
+
+        return true;
+    };
+    
     // @phpstan-ignore-next-line
     $definition
         ->rootNode()
@@ -18,7 +35,6 @@ return static function(DefinitionConfigurator $definition): void {
                 ->defaultValue([
                     'cache',
                     'parser',
-                    'executor',
                 ])
                     ->scalarPrototype()->end()
                 ->end()
@@ -40,6 +56,14 @@ return static function(DefinitionConfigurator $definition): void {
                             ->booleanNode('disabled')
                                 ->defaultValue('%kernel.debug%')
                             ->end()
+                            ->arrayNode('catch')
+                                ->scalarPrototype()->end()
+                                ->defaultValue(null)
+                                ->validate()
+                                    ->ifFalse($assertCatchable)
+                                    ->thenInvalid('Replica middleware expects a list of full qualified class names which extends "\Exception" to catch.')
+                                ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
@@ -47,22 +71,35 @@ return static function(DefinitionConfigurator $definition): void {
                     ->scalarPrototype()->end()
                     ->defaultValue(null)
                     ->validate()
-                        ->ifFalse(static function(?array $value): bool {
-                            if (null === $value) {
-                                return true;
-                            }
-
-                            foreach ($value as $current) {
-                                if (\is_string($current) && \is_a($current, \Exception::class, true)) {
-                                    continue;
-                                }
-
-                                return false;
-                            }
-
-                            return true;
-                        })
+                        ->ifFalse($assertCatchable)
                         ->thenInvalid('Retry middleware expects a list of full qualified class names which extends "\Exception".')
+                    ->end()
+                ->end()
+                ->arrayNode('slow')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('logger')
+                            ->defaultNull()
+                        ->end()    
+                        ->scalarNode('level')
+                            ->defaultValue(LogLevel::ERROR)
+                        ->end()
+                        ->integerNode('threshold')
+                            ->min(1)
+                            ->defaultValue(30)
+                        ->end()
+                        ->booleanNode('always')
+                            ->defaultFalse()
+                        ->end()
+                    ->end()
+                    ->arrayNode('cache')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('cache_pool')
+                                ->defaultValue('cache.app')
+                                ->info('Cache pool to use for cache middleware. By default `cache.app` is used. If `NULL` is provided, middleware will be still registered, but `Symfony\Component\Cache\Adapter\NullAdapter` will be used (no caching). ')
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()

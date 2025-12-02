@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace RunOpenCode\Bundle\QueryBundle\DependencyInjection\CompilerPass;
 
+use RunOpenCode\Bundle\QueryBundle\QueryBundle;
 use RunOpenCode\Component\Query\Executor\AdapterRegistry;
 use RunOpenCode\Component\Query\Replica\ReplicaMiddleware;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -12,7 +13,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * @phpstan-import-type ReplicaConfig from \RunOpenCode\Bundle\QueryBundle\QueryBundle
+ * @phpstan-import-type ReplicaMiddlewareConfig from QueryBundle
  */
 final readonly class ConfigureReplicaMiddleware implements CompilerPassInterface
 {
@@ -26,7 +27,7 @@ final readonly class ConfigureReplicaMiddleware implements CompilerPassInterface
         }
 
         /**
-         * @var array<non-empty-string, ReplicaConfig> $configuration
+         * @var array<non-empty-string, ReplicaMiddlewareConfig> $configuration
          */
         $configuration = $container->getParameter('.runopencode.query.configuration.middlewares.replica');
 
@@ -39,6 +40,7 @@ final readonly class ConfigureReplicaMiddleware implements CompilerPassInterface
                 new Reference(AdapterRegistry::class),
                 $parameters['fallback'],
                 $parameters['disabled'],
+                $parameters['catch']
             ]);
 
             $definition->addTag('runopencode.query.middleware', [

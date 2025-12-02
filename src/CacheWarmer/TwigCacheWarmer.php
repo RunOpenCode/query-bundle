@@ -19,12 +19,12 @@ final readonly class TwigCacheWarmer implements CacheWarmerInterface
     /**
      * Cache warmer is optional, so we will inject container to lazy load services, if needed.
      *
-     * @param ContainerInterface     $container    Container.
-     * @param list<non-empty-string> $namePatterns File name patterns.
+     * @param ContainerInterface     $container Container.
+     * @param list<non-empty-string> $patterns  File name patterns.
      */
     public function __construct(
         private ContainerInterface $container,
-        private array              $namePatterns,
+        private array              $patterns,
     ) {
         // noop.
     }
@@ -106,7 +106,7 @@ final readonly class TwigCacheWarmer implements CacheWarmerInterface
             $paths = $loader->getPaths($namespace);
 
             foreach ($paths as $path) {
-                $finder = Finder::create()->files()->followLinks()->name($this->namePatterns)->in($path);
+                $finder = Finder::create()->files()->followLinks()->name($this->patterns)->in($path);
 
                 foreach ($finder as $file) {
                     /** @var non-empty-string $relativePath */

@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace RunOpenCode\Bundle\QueryBundle\DependencyInjection\CompilerPass;
 
 use RunOpenCode\Bundle\QueryBundle\QueryBundle;
+use RunOpenCode\Component\Query\Parser\TwigParser;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
+
+use function RunOpenCode\Component\Query\to_regex;
 
 /**
  * @phpstan-import-type TwigParserConfig from QueryBundle
  */
-final readonly class RegisterTwigGlobals implements CompilerPassInterface
+final readonly class ConfigureTwigParser implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
@@ -20,7 +22,7 @@ final readonly class RegisterTwigGlobals implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         if (
-            !$container->hasDefinition('runopencode.query.twig')
+            !$container->hasDefinition(TwigParser::class)
             ||
             !$container->hasParameter('.runopencode.query.configuration.parser.twig')
         ) {
@@ -29,19 +31,9 @@ final readonly class RegisterTwigGlobals implements CompilerPassInterface
 
         /** @var TwigParserConfig $configuration */
         $configuration = $container->getParameter('.runopencode.query.configuration.parser.twig');
-        $twig          = $container->getDefinition('runopencode.query.twig');
 
-        if (empty($configuration['globals'])) {
-            return;
-        }
-
-        foreach ($configuration['globals'] as $name => $value) {
-            if ('service' === ($value['type'] ?? null)) {
-                $twig->addMethodCall('addGlobal', [$name, new Reference($value['id'])]);
-                continue;
-            }
-
-            $twig->addMethodCall('addGlobal', [$name, $value['value']]);
-        }
+        $container
+            ->getDefinition(TwigParser::class)
+            ->setArgument('$patterns', \array_map(static fn(string $pattern): string => to_regex($pattern), $configuration['pattern']));
     }
 }
