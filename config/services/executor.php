@@ -31,7 +31,7 @@ return static function(ContainerConfigurator $container): void {
 
     $configurator
         ->alias(ExecutorInterface::class, Executor::class);
-    
+
     $configurator
         ->alias('runopencode.query', Executor::class);
 };

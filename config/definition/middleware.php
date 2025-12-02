@@ -7,7 +7,7 @@ use RunOpenCode\Component\Query\Replica\FallbackStrategy;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 
 return static function(DefinitionConfigurator $definition): void {
-    $assertCatchable = static function (?array $value): bool {
+    $assertCatchable = static function(?array $value): bool {
         if (null === $value) {
             return true;
         }
@@ -22,7 +22,7 @@ return static function(DefinitionConfigurator $definition): void {
 
         return true;
     };
-    
+
     // @phpstan-ignore-next-line
     $definition
         ->rootNode()
@@ -80,7 +80,7 @@ return static function(DefinitionConfigurator $definition): void {
                     ->children()
                         ->scalarNode('logger')
                             ->defaultNull()
-                        ->end()    
+                        ->end()
                         ->scalarNode('level')
                             ->defaultValue(LogLevel::ERROR)
                         ->end()

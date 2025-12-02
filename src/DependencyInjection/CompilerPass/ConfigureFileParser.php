@@ -12,7 +12,7 @@ use function RunOpenCode\Component\Query\to_regex;
 
 /**
  * @phpstan-type FileParserConfig = array{
- *     pattern: list<non-empty-string>, 
+ *     pattern: list<non-empty-string>,
  *     paths: list<array{non-empty-string, non-empty-string}>,
  * }
  */
@@ -33,7 +33,7 @@ final readonly class ConfigureFileParser implements CompilerPassInterface
 
         /** @var FileParserConfig $configuration */
         $configuration = $container->getParameter('.runopencode.query.configuration.parser.file');
-        
+
         $container
             ->getDefinition(FileParser::class)
             ->setArgument('$paths', $configuration['paths'])

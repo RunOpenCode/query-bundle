@@ -11,6 +11,7 @@ use RunOpenCode\Component\Query\Parser\ParserMiddleware;
 use RunOpenCode\Component\Query\Parser\ParserRegistry;
 use RunOpenCode\Component\Query\Retry\RetryMiddleware;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function(ContainerConfigurator $container): void {
@@ -39,13 +40,13 @@ return static function(ContainerConfigurator $container): void {
         ->tag('runopencode.query.middleware', [
             'alias' => 'retry',
         ]);
-    
+
     $configurator
         ->set(SlowExecutionMiddleware::class)
         ->tag('runopencode.query.middleware', [
             'alias' => 'slow',
         ]);
-    
+
     $configurator
         ->set(ExecutorMiddleware::class)
         ->arg('$registry', service(AdapterRegistry::class))

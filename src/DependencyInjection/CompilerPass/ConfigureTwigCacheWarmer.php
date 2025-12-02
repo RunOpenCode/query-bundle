@@ -26,7 +26,7 @@ final readonly class ConfigureTwigCacheWarmer implements CompilerPassInterface
         ) {
             return;
         }
-        
+
         /** @var TwigParserConfig $configuration */
         $configuration = $container->getParameter('.runopencode.query.configuration.parser.twig');
 

@@ -25,7 +25,7 @@ return static function(DefinitionConfigurator $definition): void {
                 ->ifArray()
                     ->then(static function(array $paths): array {
                         $normalized = [];
-            
+
                         /**
                          * @var string|int $path
                          * @var string     $namespace
@@ -36,15 +36,15 @@ return static function(DefinitionConfigurator $definition): void {
                                 $path = $namespace;
                                 $namespace = null;
                             }
-            
+
                             $normalized[$path] = $namespace;
                         }
-            
+
                         return $normalized;
                     })
                 ->end()
                 ->prototype('variable')->end()
             ->end()
-        
+
         ->end();
 };

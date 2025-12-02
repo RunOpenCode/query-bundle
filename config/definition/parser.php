@@ -70,7 +70,7 @@ return static function(DefinitionConfigurator $definition): void {
                                             if (\str_starts_with($v, '@@')) {
                                                 return \substr($v, 1);
                                             }
-        
+
                                             return ['id' => \substr($v, 1), 'type' => 'service'];
                                         })
                                     ->end()
@@ -79,10 +79,10 @@ return static function(DefinitionConfigurator $definition): void {
                                             if (\is_array($v)) {
                                                 $keys = \array_keys($v);
                                                 \sort($keys);
-        
+
                                                 return $keys !== ['id', 'type'] && $keys !== ['value'];
                                             }
-        
+
                                             return true;
                                         })
                                         ->then(fn($v) => ['value' => $v])

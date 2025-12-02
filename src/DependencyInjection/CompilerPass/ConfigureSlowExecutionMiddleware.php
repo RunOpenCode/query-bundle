@@ -27,10 +27,10 @@ final readonly class ConfigureSlowExecutionMiddleware implements CompilerPassInt
         ) {
             return;
         }
-        
+
         /** @var SlowMiddlewareConfig $configuration */
         $configuration = $container->getParameter('.runopencode.query.configuration.middlewares.slow');
-        
+
         $container
             ->getDefinition(SlowExecutionMiddleware::class)
             ->setArgument('$logger', $configuration['logger'] ?? new NullLogger())

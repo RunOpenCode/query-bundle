@@ -29,7 +29,7 @@ final readonly class ConfigureRetryMiddleware implements CompilerPassInterface
 
         /** @var RetryMiddlewareConfig $configuration */
         $configuration = $container->getParameter('.runopencode.query.configuration.middlewares.retry');
-        
+
         $container
             ->getDefinition(RetryMiddleware::class)
             ->setArgument('$catch', $configuration['catch']);
