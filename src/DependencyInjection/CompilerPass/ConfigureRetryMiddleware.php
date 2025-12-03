@@ -32,6 +32,6 @@ final readonly class ConfigureRetryMiddleware implements CompilerPassInterface
 
         $container
             ->getDefinition(RetryMiddleware::class)
-            ->setArgument('$catch', $configuration['catch']);
+            ->setArgument('$catch', empty($configuration['catch']) ? null : $configuration['catch']);
     }
 }

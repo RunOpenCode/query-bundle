@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Psr\Log\NullLogger;
 use RunOpenCode\Component\Query\Cache\CacheMiddleware;
 use RunOpenCode\Component\Query\Cache\Invalidate;
 use RunOpenCode\Component\Query\Executor\AdapterRegistry;
@@ -40,6 +41,9 @@ return static function(ContainerConfigurator $container): void {
         ->tag('runopencode.query.middleware', [
             'alias' => 'retry',
         ]);
+
+    $configurator
+        ->set('runopencode.query.null_logger', NullLogger::class);
 
     $configurator
         ->set(SlowExecutionMiddleware::class)

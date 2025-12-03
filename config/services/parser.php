@@ -8,6 +8,7 @@ use RunOpenCode\Component\Query\Parser\TwigParser;
 use RunOpenCode\Component\Query\Parser\VoidParser;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
@@ -16,6 +17,7 @@ return static function(ContainerConfigurator $container): void {
 
     $configurator
         ->set(FileParser::class)
+        ->arg('$paths', param('runopencode.query.query_paths'))
         ->tag('runopencode.query.parser', [
             'alias' => FileParser::NAME,
             'priority' => 1000,

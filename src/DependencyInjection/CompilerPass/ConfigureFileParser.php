@@ -36,7 +36,6 @@ final readonly class ConfigureFileParser implements CompilerPassInterface
 
         $container
             ->getDefinition(FileParser::class)
-            ->setArgument('$paths', $configuration['paths'])
             ->setArgument('$patterns', \array_map(static fn(string $pattern): string => to_regex($pattern), $configuration['pattern']));
     }
 }

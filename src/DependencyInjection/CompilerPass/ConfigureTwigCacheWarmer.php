@@ -32,6 +32,6 @@ final readonly class ConfigureTwigCacheWarmer implements CompilerPassInterface
 
         $container
             ->getDefinition(TwigCacheWarmer::class)
-            ->setArgument('$namePatterns', $configuration['pattern']);
+            ->setArgument('$patterns', $configuration['pattern']);
     }
 }

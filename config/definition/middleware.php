@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use RunOpenCode\Component\Query\Replica\FallbackStrategy;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
@@ -58,7 +59,7 @@ return static function(DefinitionConfigurator $definition): void {
                             ->end()
                             ->arrayNode('catch')
                                 ->scalarPrototype()->end()
-                                ->defaultValue(null)
+                                ->defaultValue([])
                                 ->validate()
                                     ->ifFalse($assertCatchable)
                                     ->thenInvalid('Replica middleware expects a list of full qualified class names which extends "\Exception" to catch.')
@@ -69,7 +70,7 @@ return static function(DefinitionConfigurator $definition): void {
                 ->end()
                 ->arrayNode('retry')
                     ->scalarPrototype()->end()
-                    ->defaultValue(null)
+                    ->defaultValue([])
                     ->validate()
                         ->ifFalse($assertCatchable)
                         ->thenInvalid('Retry middleware expects a list of full qualified class names which extends "\Exception".')
@@ -79,7 +80,7 @@ return static function(DefinitionConfigurator $definition): void {
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('logger')
-                            ->defaultNull()
+                            ->defaultValue(LoggerInterface::class)
                         ->end()
                         ->scalarNode('level')
                             ->defaultValue(LogLevel::ERROR)
@@ -92,13 +93,13 @@ return static function(DefinitionConfigurator $definition): void {
                             ->defaultFalse()
                         ->end()
                     ->end()
-                    ->arrayNode('cache')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->scalarNode('cache_pool')
-                                ->defaultValue('cache.app')
-                                ->info('Cache pool to use for cache middleware. By default `cache.app` is used. If `NULL` is provided, middleware will be still registered, but `Symfony\Component\Cache\Adapter\NullAdapter` will be used (no caching). ')
-                            ->end()
+                ->end()
+                ->arrayNode('cache')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('cache_pool')
+                            ->defaultValue('cache.app')
+                            ->info('Cache pool to use for cache middleware. By default `cache.app` is used. If `NULL` is provided, middleware will be still registered, but `Symfony\Component\Cache\Adapter\NullAdapter` will be used (no caching). ')
                         ->end()
                     ->end()
                 ->end()

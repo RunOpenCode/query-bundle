@@ -14,7 +14,7 @@ return static function(DefinitionConfigurator $definition): void {
                 ->defaultNull()
                 ->info('Default connection name. If not provided, first registered adapter connection will be considered as default one.')
             ->end()
-            ->scalarNode('default_path')
+            ->scalarNode('default_query_path')
                 ->info('The default path used to load queries.')
                 ->defaultValue('%kernel.project_dir%/query')
             ->end()

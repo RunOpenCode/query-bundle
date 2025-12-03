@@ -47,11 +47,11 @@ use Twig\Loader\FilesystemLoader;
  *     replica: non-empty-list<non-empty-string>,
  *     fallback: FallbackStrategy,
  *     disabled: boolean,
- *     catch: list<class-string<\Exception>>|null
+ *     catch: list<class-string<\Exception>>
  * }
  *
  * @phpstan-type RetryMiddlewareConfig = array{
- *     catch: list<class-string<\Exception>>|null
+ *     catch: list<class-string<\Exception>>
  * }
  *
  * @phpstan-type SlowMiddlewareConfig = array{
@@ -119,11 +119,9 @@ final class QueryBundle extends AbstractBundle
                 'optimizations'    => $config['parser']['twig']['optimizations'] ?? -1,
                 'pattern'          => $config['parser']['twig']['pattern'],
                 'globals'          => $config['parser']['twig']['globals'] ?? [],
-                'paths'            => $paths,
             ])
             ->set('.runopencode.query.configuration.parser.file', [
                 'pattern' => $config['parser']['file']['pattern'],
-                'paths'   => $paths,
             ])
             ->set('.runopencode.query.configuration.middlewares.replica', $config['middlewares']['replica'] ?? [])
             ->set('.runopencode.query.configuration.middlewares.retry', $config['middlewares']['retry'])
@@ -164,12 +162,20 @@ final class QueryBundle extends AbstractBundle
      */
     private function processPaths(?string $defaultPath, array $paths, ContainerBuilder $builder): array
     {
+        $parameterBag = $builder->getParameterBag();
+        $defaultPath  = $parameterBag->resolveValue($defaultPath);
+        $paths        = $parameterBag->resolveValue($paths);
+
         /**
          * @var list<array{non-empty-string, non-empty-string}> $processed
          */
         $processed = [];
 
-        // First, we process default path.
+        /**
+         * First, we process default path.
+         *
+         * @var non-empty-string|null $defaultPath
+         */
         if (null !== $defaultPath) {
             $builder->addResource(new FileExistenceResource($defaultPath));
 
@@ -178,8 +184,9 @@ final class QueryBundle extends AbstractBundle
             }
         }
 
-        // Then we process our own configured paths.
         /**
+         * Then we process our own configured paths.
+         *
          * @var array<non-empty-string, non-empty-string|null> $paths
          */
         foreach ($paths as $path => $namespace) {
@@ -192,8 +199,11 @@ final class QueryBundle extends AbstractBundle
             $processed[] = [$path, $namespace ?? FilesystemLoader::MAIN_NAMESPACE];
         }
 
-        // Then, a bundle paths, giving a priority to the overrides.
-        /** @var array<non-empty-string, class-string> $bundles */
+        /**
+         * Then, a bundle paths, giving a priority to the overrides.
+         *
+         * @var array<non-empty-string, class-string> $bundles
+         */
         $bundles = $builder->getParameter('kernel.bundles');
         /** @var non-empty-string $projectDir */
         $projectDir = $builder->getParameter('kernel.project_dir');

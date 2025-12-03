@@ -40,7 +40,7 @@ final readonly class ConfigureReplicaMiddleware implements CompilerPassInterface
                 new Reference(AdapterRegistry::class),
                 $parameters['fallback'],
                 $parameters['disabled'],
-                $parameters['catch']
+                empty($parameters['catch']) ? null : $parameters['catch'],
             ]);
 
             $definition->addTag('runopencode.query.middleware', [
