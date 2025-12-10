@@ -76,7 +76,7 @@ return static function(DefinitionConfigurator $definition): void {
                                         })
                                     ->end()
                                     ->beforeNormalization()
-                                        ->ifTrue(function($v) {
+                                        ->ifTrue(function($v): bool {
                                             if (\is_array($v)) {
                                                 $keys = \array_keys($v);
                                                 \sort($keys);
@@ -86,7 +86,7 @@ return static function(DefinitionConfigurator $definition): void {
 
                                             return true;
                                         })
-                                        ->then(fn($v) => ['value' => $v])
+                                        ->then(fn($v): array => ['value' => $v])
                                     ->end()
                                     ->children()
                                         ->scalarNode('id')->end()

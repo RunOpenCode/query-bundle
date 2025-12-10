@@ -94,7 +94,6 @@ final readonly class TwigCacheWarmer implements CacheWarmerInterface
     /**
      * Get templates registered in loader.
      *
-     * @param FilesystemLoader $loader
      *
      * @return iterable<non-empty-string>
      */

@@ -25,7 +25,7 @@ final readonly class RegisterTwigExtension implements CompilerPassInterface
         $extensions = $container->findTaggedServiceIds('runopencode.query.twig.extension');
 
         // No extensions to register.
-        if (empty($extensions)) {
+        if ($extensions === []) {
             return;
         }
 

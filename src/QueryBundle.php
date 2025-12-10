@@ -156,7 +156,6 @@ final class QueryBundle extends AbstractBundle
      *
      * @param non-empty-string|null                          $defaultPath
      * @param array<non-empty-string, non-empty-string|null> $paths
-     * @param ContainerBuilder                               $builder
      *
      * @return list<array{non-empty-string, non-empty-string}>
      */
