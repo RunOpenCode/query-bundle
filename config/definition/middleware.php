@@ -24,7 +24,6 @@ return static function(DefinitionConfigurator $definition): void {
         return true;
     };
 
-    // @phpstan-ignore-next-line
     $definition
         ->rootNode()
         ->addDefaultsIfNotSet()
