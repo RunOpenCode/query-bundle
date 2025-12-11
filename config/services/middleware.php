@@ -51,7 +51,7 @@ return static function(ContainerConfigurator $container): void {
         ->tag('runopencode.query.middleware', [
             'alias' => 'slow',
         ]);
-    
+
     $configurator
         ->set(ConvertMiddleware::class)
         ->arg('$registry', AdapterRegistry::class)
