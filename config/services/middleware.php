@@ -54,7 +54,7 @@ return static function(ContainerConfigurator $container): void {
 
     $configurator
         ->set(ConvertMiddleware::class)
-        ->arg('$registry', AdapterRegistry::class)
+        ->arg('$registry', service(AdapterRegistry::class))
         ->tag('runopencode.query.middleware', [
             'alias' => 'convert',
         ]);
