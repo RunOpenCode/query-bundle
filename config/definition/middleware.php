@@ -35,6 +35,7 @@ return static function(DefinitionConfigurator $definition): void {
                 ->defaultValue([
                     'cache',
                     'parser',
+                    'convert',
                 ])
                     ->scalarPrototype()->end()
                 ->end()

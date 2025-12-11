@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Psr\Log\NullLogger;
 use RunOpenCode\Component\Query\Cache\CacheMiddleware;
 use RunOpenCode\Component\Query\Cache\Invalidate;
+use RunOpenCode\Component\Query\Doctrine\Dbal\Middleware\ConvertMiddleware;
 use RunOpenCode\Component\Query\Executor\AdapterRegistry;
 use RunOpenCode\Component\Query\Executor\ExecutorMiddleware;
 use RunOpenCode\Component\Query\Monitor\SlowExecutionMiddleware;
@@ -49,6 +50,13 @@ return static function(ContainerConfigurator $container): void {
         ->set(SlowExecutionMiddleware::class)
         ->tag('runopencode.query.middleware', [
             'alias' => 'slow',
+        ]);
+    
+    $configurator
+        ->set(ConvertMiddleware::class)
+        ->arg('$registry', AdapterRegistry::class)
+        ->tag('runopencode.query.middleware', [
+            'alias' => 'convert',
         ]);
 
     $configurator
