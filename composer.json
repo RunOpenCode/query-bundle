@@ -13,7 +13,7 @@
         "psr/cache": "^3.0",
         "psr/container": "^2.0",
         "psr/log": "^2.0|^3.0",
-        "runopencode/query": "^0.2",
+        "runopencode/query": "^0.1.32",
         "symfony/config": "^7.0",
         "symfony/dependency-injection": "^7.0",
         "symfony/finder": "^7.0",
@@ -26,47 +26,10 @@
             "RunOpenCode\\Bundle\\QueryBundle\\": "src/"
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../Component/Dataset",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "../../Component/Bitmask",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "../../Component/Query",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "../../Component/Metadata",
-            "options": {
-                "symlink": false
-            }
-        },
-        {
-            "type": "path",
-            "url": "../../Bundle/MetadataBundle",
-            "options": {
-                "symlink": false
-            }
-        }
-    ],
     "config": {
         "sort-packages": true
     },
-    "version": "0.2",
+    "version": "0.1.32",
     "minimum-stability": "dev",
     "prefer-stable": true
 }
