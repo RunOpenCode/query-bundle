@@ -13,3 +13,8 @@ Bundle integrates [Query Component](https://github.com/RunOpenCode/query) into S
 - [Send pull requests](https://github.com/RunOpenCode/phplib/pulls)
 - [Changelog](https://github.com/RunOpenCode/phplib/blob/master/CHANGELOG)
 - [License](https://github.com/RunOpenCode/phplib/blob/master/LICENSE)
+
+## TODO
+
+- [ ] Add compile time check for replica, verify that replica connection exists. If replica is disabled, verification
+  should emit only warning.
