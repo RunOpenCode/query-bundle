@@ -37,7 +37,7 @@ return static function(DefinitionConfigurator $definition): void {
                     'parser',
                     'convert',
                     'retry',
-                    'slow'
+                    'slow',
                 ])
                     ->scalarPrototype()->end()
                 ->end()
